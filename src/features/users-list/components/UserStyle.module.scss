@@ -1,0 +1,44 @@
+@import '../../../index.scss';
+
+.userWrapper {
+  display: flex;
+  border: 2px solid $light-gray;
+  border-radius: 6px;
+  padding: 0.4rem;
+  margin: 0.5rem;
+
+  span {
+    color: $gray;
+  }
+
+  .thumb {
+    height: 110px;
+    width: 110px;
+    overflow: hidden;
+    border-radius: 4px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .info {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0.5rem;
+
+    .name {
+      font-size: 1.8rem;
+      font-weight: bolder;
+    }
+
+    .visited,
+    .total {
+      margin-left: 0.2rem;
+      color: black;
+      font-weight: bolder;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@import '../../index.scss';
+
+.navbarContainer {
+  background-color: $purple;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 4rem;
+  position: fixed;
+  width: 100%;
+  padding: 0 1.5rem;
+  top: 0;
+
+  .banner {
+    color: white;
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-size: 1.4rem;
+  }
+
+  .navItem {
+    background-color: white;
+    color: $purple;
+    padding: 0.5rem 1.4rem;
+    text-decoration: none;
+    font-weight: bolder;
+    margin-left: 1rem;
+    border-radius: 5px;
+    border: 1px solid white;
+
+    &:hover {
+      background-color: $purple;
+      color: white;
+    }
+  }
+}
