@@ -1,11 +1,16 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { Button } from '../../shared/components/Button';
-import styles from './FormStyle.module.scss';
-import FormInput from '../../shared/components/FormInput';
+import { useDispatch } from 'react-redux';
 
+import { Button } from '../../shared/components/Button';
+import FormInput from '../../shared/components/FormInput';
+import { RoutePath } from '../../routing/Routes';
+import usersSlice from '../../users-list/redux/usersSlice';
+
+import styles from './FormStyle.module.scss';
 export const UserSignUp = () => {
+  const dispatch = useDispatch();
   const validationSchema = yup.object().shape({
     email: yup.string().email().required('Enter valid email'),
     password: yup.string().required('Enter password').min(5),
@@ -17,9 +22,9 @@ export const UserSignUp = () => {
           .string()
           .oneOf([yup.ref('password')], 'Both password need to be the same'),
       })
-      .min(5),
+      .required('Enter password confirmation'),
     name: yup.string().required().min(1),
-    imgURL: yup.string().required('Enter valid URL').url(),
+    imageUrl: yup.string().required('Enter valid URL').url(),
   });
 
   return (
@@ -32,10 +37,10 @@ export const UserSignUp = () => {
             password: '',
             confirmPassword: '',
             name: '',
-            imgURL: '',
+            imageUrl: '',
           }}
           validateOnBlur
-          onSubmit={(values) => console.log('submit', values)}
+          onSubmit={(values) => dispatch(usersSlice.actions.signUp(values))}
           validationSchema={validationSchema}
           values
         >
@@ -72,6 +77,7 @@ export const UserSignUp = () => {
                   touched={touched.password}
                   errors={errors.password}
                   styles={styles.error}
+                  type={'password'}
                 />
                 <FormInput
                   handleChange={handleChange}
@@ -83,6 +89,7 @@ export const UserSignUp = () => {
                   touched={touched.confirmPassword}
                   errors={errors.confirmPassword}
                   styles={styles.error}
+                  type={'password'}
                 />
                 <FormInput
                   handleChange={handleChange}
@@ -97,18 +104,19 @@ export const UserSignUp = () => {
                 />
                 <FormInput
                   handleChange={handleChange}
-                  name={'imgURL'}
+                  name={'imageUrl'}
                   text={'Image URL'}
                   placeholder={'Enter Image URL'}
                   handleBlur={handleBlur}
-                  values={values.imgURL}
-                  touched={touched.imgURL}
-                  errors={errors.imgURL}
+                  values={values.imageUrl}
+                  touched={touched.imageUrl}
+                  errors={errors.imageUrl}
                   styles={styles.error}
                 />
                 <Button
+                  route={RoutePath.CITIES}
                   styles={styles.navItem}
-                  onClick={handleSubmit}
+                  onClick={() => handleSubmit()}
                   buttonText={'SUBMIT'}
                   disabled={!isValid && !dirty}
                   type={'submit'}

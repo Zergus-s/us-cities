@@ -1,0 +1,58 @@
+@import '../../../index.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .button {
+    background-color: $purple;
+    color: white;
+    border-radius: 5px;
+    padding: 0.6rem 1.3rem;
+    font-weight: bolder;
+    cursor: pointer;
+    border: 1px solid $purple;
+    margin-bottom: 1rem;
+
+    &:hover {
+      background-color: white;
+      color: $purple;
+    }
+  }
+  .container {
+    display: flex;
+    border: 2px solid $light-gray;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.5rem;
+    width: 30rem;
+
+    div {
+      display: inline;
+
+      .button {
+        background-color: $purple;
+        color: white;
+        border-radius: 5px;
+        padding: 0.6rem 1rem;
+        font-weight: bolder;
+        margin: 0.5rem -0.3rem 0.5rem 0.8rem;
+        cursor: pointer;
+        border: 1px solid $purple;
+
+        &:hover {
+          background-color: white;
+          color: $purple;
+        }
+      }
+    }
+    .name {
+      font-size: 1.3rem;
+      font-weight: bolder;
+    }
+  }
+}

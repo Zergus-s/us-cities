@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Modal from '../components/Modal';
+import Modal from '../../admin/forms/Modal';
 
 function useModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,20 +13,8 @@ function useModal() {
     setIsModalOpen(false);
   };
 
-  const renderModal = (headerText, bodyText, onConfirm, onCancel) => {
-    const confirmClickHandler = () => {
-      onConfirm(...modalProps);
-      closeModal();
-    };
-    return (
-      <Modal
-        isOpen={isModalOpen}
-        headerText={headerText}
-        bodyText={bodyText}
-        onConfirm={confirmClickHandler}
-        onCancel={onCancel || closeModal}
-      />
-    );
+  const renderModal = (inputs) => {
+    return <Modal isOpen={isModalOpen} onClose={closeModal} inputs={inputs} />;
   };
 
   return { openModal, closeModal, renderModal };

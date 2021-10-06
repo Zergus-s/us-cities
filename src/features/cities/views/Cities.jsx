@@ -1,24 +1,31 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
+import City from '../components/City';
+import citiesSlice from '../redux/citiesSlice';
 
 export default function Cities() {
-  const { status } = useSelector((state) => state.characters);
+  const { loading, error, cities } = useSelector((state) => state.cities);
 
-  switch (status) {
-    case 'failed':
-      console.error();
-      break;
-    case 'loading':
-      return <h1>Loading</h1>;
-    case 'success':
-      return (
-        <div>
-          <h2>Cities</h2>
-        </div>
-      );
+  const dispatch = useDispatch();
 
-    default:
-      return null;
+  useEffect(() => {
+    dispatch(citiesSlice.actions.fetchCities());
+  }, []);
+
+  if (loading) {
+    return <h1>Loading</h1>;
   }
+  if (error) {
+    return <h1>{error}</h1>;
+  }
+  return (
+    <div>
+      <h1>Cities</h1>
+      <div>
+        {cities.map((item) => (
+          <City item={item} key={item.id} />
+        ))}
+      </div>
+    </div>
+  );
 }

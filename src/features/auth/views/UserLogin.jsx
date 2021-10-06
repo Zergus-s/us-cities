@@ -1,11 +1,16 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { Button } from '../../shared/components/Button';
-import styles from './FormStyle.module.scss';
-import FormInput from '../../shared/components/FormInput';
 
+import FormInput from '../../shared/components/FormInput';
+import { RoutePath } from '../../routing/Routes';
+import { Button } from '../../shared/components/Button';
+
+import styles from './FormStyle.module.scss';
+import usersSlice from '../../users-list/redux/usersSlice';
+import { useDispatch } from 'react-redux';
 export const UserLogin = () => {
+  const dispatch = useDispatch();
   const validationSchema = yup.object().shape({
     email: yup
       .string()
@@ -21,7 +26,7 @@ export const UserLogin = () => {
         <Formik
           initialValues={{ email: '', password: '' }}
           validateOnBlur
-          onSubmit={(values) => console.log('submit', values)}
+          onSubmit={(values) => dispatch(usersSlice.actions.logIn(values))}
           validationSchema={validationSchema}
         >
           {({
@@ -59,8 +64,9 @@ export const UserLogin = () => {
                   styles={styles.error}
                 />
                 <Button
+                  route={RoutePath.CITIES}
                   styles={styles.navItem}
-                  onClick={handleSubmit}
+                  onClick={() => handleSubmit()}
                   buttonText={'SUBMIT'}
                   disabled={!isValid && !dirty}
                   type={'submit'}

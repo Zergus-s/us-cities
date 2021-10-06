@@ -1,32 +1,67 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from '../../../API/index';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const fetchUsers = createAsyncThunk(
-  'characters/getCharacters',
-  async () => {
-    const response = await axios.get('users');
+const getTokenFromLocalStorage = () => {
+  const data = JSON.parse(localStorage.getItem('tokenData'));
+  if (data && Date.now() - +data.time > 3600000) localStorage.clear();
+  if (!data)
+    return {
+      token: '',
+      userId: '',
+    };
+  else return data;
+};
 
-    return response.data;
-  }
-);
-
-export const UsersSlice = createSlice({
+const usersSlice = createSlice({
   name: 'users',
-  initialState: { users: [], status: '' },
-  reducers: {},
-  extraReducers: {
-    [fetchUsers.pending]: (state) => {
-      state.status = 'loading';
+  initialState: {
+    users: [],
+    loading: false,
+    error: null,
+    authData: getTokenFromLocalStorage(),
+  },
+  reducers: {
+    fetchUsers: (state) => {
+      state.loading = true;
+      state.error = null;
     },
-    [fetchUsers.fulfilled]: (state, action) => {
+
+    logOut: (state) => {
+      state.authData = {};
+      localStorage.clear();
+    },
+
+    logIn: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+
+    signUp: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+
+    setUsers: (state, action) => {
       state.users = action.payload;
-      state.status = 'success';
+      state.loading = false;
+      state.error = null;
     },
-    [fetchUsers.rejected]: (state, action) => {
-      state.status = 'failed';
-      console.error(action.error.message, 'characters');
+
+    setToken: (state, action) => {
+      state.authData = action.payload;
+      localStorage.setItem(
+        'tokenData',
+        JSON.stringify({
+          token: action.payload.token,
+          userId: action.payload.userId,
+          time: Date.now(),
+        })
+      );
+    },
+    setError: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     },
   },
 });
 
-export default UsersSlice.reducer;
+export default usersSlice;

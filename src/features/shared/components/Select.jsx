@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FormInput({
+export default function Select({
   handleChange,
   name,
   text,
@@ -10,20 +10,25 @@ export default function FormInput({
   errors,
   styles,
   placeholder,
-  type = 'text',
+  states,
 }) {
   return (
-    <div className={styles.inputContainer}>
+    <div className={styles.formGroup}>
       <label htmlFor={name}>{text}</label>
-      <input
+      <select
         placeholder={placeholder}
-        type={type}
-        className="input"
         name={name}
-        onChange={handleChange}
+        id={name}
         onBlur={handleBlur}
+        onChange={handleChange}
+        className={styles.formControl}
         value={values}
-      />
+      >
+        <option value="" />
+        {states.map((option) => (
+          <option key={option.id}>{option.name}</option>
+        ))}
+      </select>
       {touched && errors && <p className={styles.error}>{errors}</p>}
     </div>
   );

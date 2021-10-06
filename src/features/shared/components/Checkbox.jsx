@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FormInput({
+export default function Checkbox({
   handleChange,
   name,
   text,
@@ -12,18 +12,18 @@ export default function FormInput({
   placeholder,
   type = 'text',
 }) {
+  console.log(values);
   return (
-    <div className={styles.inputContainer}>
-      <label htmlFor={name}>{text}</label>
+    <div className={styles.checkbox}>
       <input
         placeholder={placeholder}
         type={type}
-        className="input"
+        className={styles.checkboxInput}
         name={name}
         onChange={handleChange}
         onBlur={handleBlur}
-        value={values}
       />
+      <label htmlFor={name}>{text}</label>
       {touched && errors && <p className={styles.error}>{errors}</p>}
     </div>
   );
