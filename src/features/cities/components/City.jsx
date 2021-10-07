@@ -5,13 +5,15 @@ import citiesSlice from '../redux/citiesSlice';
 
 import styles from './cityStyle.module.scss';
 
-function City({ item }) {
+export default function City({ item }) {
   const dispatch = useDispatch();
+
   const handleClickVisited = (item) => {
     const city = { ...item };
     city.visited = true;
     dispatch(citiesSlice.actions.updateCityStatus(item));
   };
+
   return (
     <div className={styles.userWrapper}>
       <div className={styles.thumb}>
@@ -44,5 +46,3 @@ function City({ item }) {
     </div>
   );
 }
-
-export default City;

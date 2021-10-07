@@ -1,7 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
 
 import { Button } from '../../shared/components/Button';
 import FormInput from '../../shared/components/FormInput';
@@ -9,6 +9,7 @@ import { RoutePath } from '../../routing/Routes';
 import usersSlice from '../../users-list/redux/usersSlice';
 
 import styles from './FormStyle.module.scss';
+
 export const UserSignUp = () => {
   const dispatch = useDispatch();
   const validationSchema = yup.object().shape({

@@ -1,20 +1,42 @@
 import React, { useState } from 'react';
-import Modal from '../../admin/forms/Modal';
+import ReactDOM from 'react-dom';
+
+import styles from './useModal.module.scss';
+
+const modalNode = document.querySelector('#modal');
 
 function useModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalProps, setModalProps] = useState([]);
-  const openModal = (...args) => {
-    setModalProps(args);
+
+  const openModal = () => {
     setIsModalOpen(true);
   };
   const closeModal = () => {
-    setModalProps([]);
     setIsModalOpen(false);
   };
+  const backdropClickHandler = (e) => {
+    if (e.target.id === 'modalBackdrop') closeModal();
+  };
 
-  const renderModal = (inputs) => {
-    return <Modal isOpen={isModalOpen} onClose={closeModal} inputs={inputs} />;
+  const renderModal = (Component, inputs, option) => {
+    if (!isModalOpen) return null;
+    return ReactDOM.createPortal(
+      <div
+        id="modalBackdrop"
+        className={styles.backDrop}
+        onClick={backdropClickHandler}
+      >
+        <div className={styles.modal}>
+          <Component
+            styles={styles}
+            onClose={closeModal}
+            inputs={inputs}
+            option={option}
+          />
+        </div>
+      </div>,
+      modalNode
+    );
   };
 
   return { openModal, closeModal, renderModal };

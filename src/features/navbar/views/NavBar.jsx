@@ -1,17 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import usersSlice from '../../users-list/redux/usersSlice';
 import { RoutePath } from '../../routing/Routes';
 import { Button } from '../../shared/components/Button';
-import { useDispatch } from 'react-redux';
 
 import styles from './NavBar.module.scss';
 
 export default function NavBar({ isAuthorized }) {
   const dispatch = useDispatch();
+
   const handleResetAutorisation = () => {
     dispatch(usersSlice.actions.logOut());
   };
+
   return (
     <nav className={styles.navbarContainer}>
       <div className={styles.banner}>US CITIES</div>

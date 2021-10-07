@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import CitiesAdmin from '../admin/views/CitiesAdmin';
+
 import { UserLogin } from '../auth/views/UserLogin';
 import { UserSignUp } from '../auth/views/UserSignUp';
-import Cities from '../cities/views/Cities';
-
+import { CitiesAdmin } from '../admin/views/CitiesAdmin';
 import UsersList from '../users-list/views/UsersList';
+import Cities from '../cities/views/Cities';
 
 export const RoutePath = {
   USERS: '/users',

@@ -12,7 +12,6 @@ export default function Checkbox({
   placeholder,
   type = 'text',
 }) {
-  console.log(values);
   return (
     <div className={styles.checkbox}>
       <input
@@ -22,6 +21,7 @@ export default function Checkbox({
         name={name}
         onChange={handleChange}
         onBlur={handleBlur}
+        checked={values}
       />
       <label htmlFor={name}>{text}</label>
       {touched && errors && <p className={styles.error}>{errors}</p>}

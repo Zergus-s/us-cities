@@ -1,5 +1,6 @@
 import { takeLatest, call, put, select } from '@redux-saga/core/effects';
 import axios from '../../../API/index';
+
 import citiesSlice from './citiesSlice';
 
 function* deleteCitySaga({ payload }) {
@@ -34,6 +35,27 @@ function* createCitySaga({ payload }) {
   yield put(citiesSlice.actions.fetchCities());
 }
 
+function* updateCitySaga({ payload }) {
+  const { token } = yield select((state) => state.users.authData);
+  yield call(
+    axios.put,
+    `/cities/${payload.values.id}`,
+    {
+      name: payload.values.name,
+      stateId: payload.values.stateId,
+      population: payload.values.population,
+      imageUrl: payload.values.imageURL,
+      visited: payload.values.visited ? true : false,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  payload.close();
+  yield put(citiesSlice.actions.fetchCities());
+}
 function* updateCityStatusSaga({ payload }) {
   const { token } = yield select((state) => state.users.authData);
   yield call(
@@ -52,28 +74,6 @@ function* updateCityStatusSaga({ payload }) {
       },
     }
   );
-  yield put(citiesSlice.actions.fetchCities());
-}
-
-function* updateCitySaga({ payload }) {
-  const { token } = yield select((state) => state.users.authData);
-  yield call(
-    axios.put,
-    `/cities/${payload.values.stateId}`,
-    {
-      name: payload.values.name,
-      stateId: payload.values.stateId,
-      population: payload.values.population,
-      imageUrl: payload.values.imageURL,
-      visited: payload.values.visited,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  payload.close();
   yield put(citiesSlice.actions.fetchCities());
 }
 
